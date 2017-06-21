@@ -14,4 +14,9 @@ public class LevelManager : MonoBehaviour {
         Debug.Log("Exiting game");
         Application.Quit();
     }
+
+    public void LoadNextLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel + 1);
+    }
 }
