@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Paddle : MonoBehaviour {
 
-    
+    public float minX, maxX;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,7 +15,7 @@ public class Paddle : MonoBehaviour {
 
         float mousePosInBlocks = (Input.mousePosition.x / Screen.width) * 16;
 
-        paddlePos.x = Mathf.Clamp(mousePosInBlocks, 0.5f, 15.5f);
+        paddlePos.x = Mathf.Clamp(mousePosInBlocks, minX, maxX);
 
         this.transform.position = paddlePos;
 	}
