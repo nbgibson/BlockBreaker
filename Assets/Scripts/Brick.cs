@@ -5,6 +5,7 @@ public class Brick : MonoBehaviour {
 
     public int maxHits;
     public Sprite[] hitSprites;
+    public GameObject smoke;
 
     private int timesHit;
 
@@ -23,6 +24,7 @@ public class Brick : MonoBehaviour {
         timesHit++;
         if(timesHit >= maxHits)
         {
+            PuffSmoke();
             Destroy(gameObject);
         }
         else
@@ -31,9 +33,22 @@ public class Brick : MonoBehaviour {
         }
     }
 
+    void PuffSmoke()
+    {
+        GameObject smokePuff = Instantiate(smoke, transform.position, Quaternion.identity) as GameObject;
+        smokePuff.particleSystem.startColor = gameObject.GetComponent<SpriteRenderer>().color;
+    }
+
     void LoadSprites()
     {
         int spriteIndex = timesHit - 1;
-        this.GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
+        if(hitSprites[spriteIndex] != null)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
+        }
+        else
+        {
+            Debug.LogError("Brick sprite missing!");
+        }
     }
 }
