@@ -6,25 +6,45 @@ public class Brick : MonoBehaviour {
     public int maxHits;
     public Sprite[] hitSprites;
     public GameObject smoke;
+    public static int breakableCount = 0; //One instance of this varible so long as there is a brick in the scene.
 
     private int timesHit;
-
-	// Use this for initialization
-	void Start () {
+    private bool isBreakable;
+    private LevelManager levelManager;
+    // Use this for initialization
+    void Start () {
         timesHit = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        isBreakable = (this.tag == "Breakable");
+        if (isBreakable)
+        {
+            breakableCount++;
+        }
+        levelManager = GameObject.FindObjectOfType<LevelManager>();
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 	   
 	}
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        timesHit++;
-        if(timesHit >= maxHits)
+        
+        if (isBreakable)
         {
+            HandleHits();
+        }
+    }
+
+    void HandleHits()
+    {
+        timesHit++;
+        if (timesHit >= maxHits)
+        {
+            breakableCount--;
             PuffSmoke();
+            levelManager.BrickDestroyed();
             Destroy(gameObject);
         }
         else
