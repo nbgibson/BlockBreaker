@@ -12,9 +12,20 @@ public class Ball : MonoBehaviour {
         paddleToBallVector = this.transform.position - paddle.transform.position;
         print(paddleToBallVector);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 tweak = new Vector2(Random.Range(0f, 0.2f), Random.Range(0f, 0.2f));
+        if (hasStarted)
+        {
+            audio.Play();
+            rigidbody2D.velocity += tweak;
+        }
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (!hasStarted)
         {
             this.transform.position = paddle.transform.position + paddleToBallVector;
