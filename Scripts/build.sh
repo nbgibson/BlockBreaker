@@ -54,4 +54,4 @@ cat $(pwd)/unity.log
 #cat $(pwd)/unity.log
 
 #exit $(($rc1|$rc2)) 
-exit $(rc1)
+#exit $(rc1)
